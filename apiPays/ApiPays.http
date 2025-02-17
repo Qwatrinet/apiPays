@@ -1,0 +1,6 @@
+@ApiPays_HostAddress = http://localhost:5051
+
+GET {{ApiPays_HostAddress}}/Pays/
+Accept: application/json
+
+###
