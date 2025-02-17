@@ -9,7 +9,9 @@ namespace TestsPays
         public void TestCountryCode()
         {
             Pays country = new Pays();
+
             country.CodePays = "FR";
+
             Assert.AreEqual("FR", country.CodePays);
         }
     }
