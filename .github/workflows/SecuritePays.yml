@@ -1,18 +1,6 @@
 name: "CodeQL"
 
-on:
-  push:
-    branches: [main,release,dev]
-    paths:
-    - '**.cs'
-    - '**.csproj'
-  pull_request:
-    branches: [main,release,dev]
-    paths:
-    - '**.cs'
-    - '**.csproj'
-  schedule:
-    - cron: '0 14 * * 2'
+on: [push]
 
 jobs:
   analyze:
