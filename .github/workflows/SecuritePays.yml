@@ -2,7 +2,7 @@ name: "CodeQL"
 
 on:
   push:
-    branches: [main, release, dev]
+    branches: [main,release,dev]
     paths:
     - '**.cs'
     - '**.csproj'
