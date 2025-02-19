@@ -12,7 +12,7 @@ namespace TestsPays
 
             country.CodePays = "FR";
 
-            Assert.AreEqual("BOBBY", country.CodePays);
+            Assert.AreEqual("FR", country.CodePays);
         }
     }
 }
