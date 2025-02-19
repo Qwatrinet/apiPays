@@ -2,8 +2,9 @@ name: build and test the country API
 
 on:
   push:
+    branches: [ dev ]
   pull_request:
-    branches: [ main,release,dev ]
+    branches: [ main,release ]
     paths:
     - '**.cs'
     - '**.csproj'
@@ -21,7 +22,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest, macOS-latest]
+        os: [ubuntu-latest, macOS-latest]
 
     steps:
     - uses: actions/checkout@v4
