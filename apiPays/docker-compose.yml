@@ -1,0 +1,32 @@
+name: container-apipays
+
+volumes:
+  mssqldata:
+  
+networks:
+  apipays-network:
+    driver: bridge   
+    
+services:
+  apipays:
+    container_name: api-pays
+    hostname: api-pays
+    ports:
+      - 2472:80
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    depends_on:
+      - sql-server    
+  sql-server:
+    container_name: sqlserver    
+    hostname: sqlserver
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    ports:
+      - 1433:1433
+    volumes:
+      - mssqldata:/var/opt/mssql
+      - ./sql/toto.sql:/docker-entrypoint-initdb.d/toto.sql
+    env_file: sqlserver.env
+  
+    

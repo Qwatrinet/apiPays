@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ApiPays.Migrations
 {
     [DbContext(typeof(ContextePays))]
-    [Migration("20250217135722_Retour")]
-    partial class Retour
+    [Migration("20250224090127_truite")]
+    partial class truite
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -35,7 +35,8 @@ namespace ApiPays.Migrations
 
                     b.Property<string>("CodePays")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)")
+                        .HasMaxLength(2)
+                        .HasColumnType("char")
                         .HasColumnName("code_pays");
 
                     b.Property<string>("NomPays")

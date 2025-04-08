@@ -5,7 +5,7 @@
 namespace ApiPays.Migrations
 {
     /// <inheritdoc />
-    public partial class Test : Migration
+    public partial class truite : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -16,8 +16,8 @@ namespace ApiPays.Migrations
                 {
                     PaysId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    code_pays = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    nom_pays = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: false)
+                    code_pays = table.Column<string>(type: "char(2)", maxLength: 2, nullable: false),
+                    nom_pays = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -66,9 +66,9 @@ namespace ApiPays.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     DateDepart = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DateArrivee = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    VilleDepartId = table.Column<int>(type: "int", maxLength: 60, nullable: false),
-                    VilleArriveeId = table.Column<int>(type: "int", maxLength: 60, nullable: false)
+                    DateArrivee = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    VilleDepartId = table.Column<int>(type: "int", nullable: false),
+                    VilleArriveeId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -92,7 +92,8 @@ namespace ApiPays.Migrations
                 columns: table => new
                 {
                     PersonneId = table.Column<int>(type: "int", nullable: false),
-                    TrajetId = table.Column<int>(type: "int", nullable: false)
+                    TrajetId = table.Column<int>(type: "int", nullable: false),
+                    estConducteur = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -139,9 +140,9 @@ namespace ApiPays.Migrations
                 column: "VilleDepartId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ville_code_postal_nom_ville",
+                name: "IX_ville_code_postal_nom_ville_PaysId",
                 table: "ville",
-                columns: new[] { "code_postal", "nom_ville" },
+                columns: new[] { "code_postal", "nom_ville", "PaysId" },
                 unique: true);
 
             migrationBuilder.CreateIndex(

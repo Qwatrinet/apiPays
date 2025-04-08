@@ -1,4 +1,6 @@
 using ApiPays.DB;
+using Microsoft.AspNetCore.HttpLogging;
+using Microsoft.EntityFrameworkCore;
 
 //using (var context = new ContextePays())
 //{
@@ -31,8 +33,17 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-//Ajouter notre contexte
-builder.Services.AddDbContext<ContextePays>();
+//Ajouter notre contexte si connection fixe
+//builder.Services.AddDbContext<ContextePays>();
+//Personnaliser la chaine de connection dans appsettings.json
+var connectionstring = builder.Configuration.GetConnectionString("ConnectionSQLServer");
+builder.Services.AddDbContext<ContextePays>(options => options.UseSqlServer(connectionstring));
+
+builder.Services.AddHttpLogging(options =>
+{
+    options.LoggingFields = HttpLoggingFields.All;
+    options.CombineLogs = true;
+});
 
 builder.Services.AddCors(o =>
 {
@@ -52,6 +63,10 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+
+    //RewriteOptions options = new RewriteOptions()
+    //    .AddRedirect("\\/", "swagger/index.html");
+    //app.UseRewriter(options);
 }
 
 app.UseHttpsRedirection();
@@ -59,6 +74,13 @@ app.UseCors("_localhostOrigins");  // lolol sinon on peut pas fetch depuis local
 
 app.UseAuthorization();
 
-app.MapControllers();
+app.UseHttpLogging();
+
+app.MapControllers().WithHttpLogging(HttpLoggingFields.All);
+
+//using (var scope = app.Services.CreateScope())
+//{
+//    scope.ServiceProvider.GetRequiredService<ContextePays>().Database.Migrate();
+//}
 
 app.Run();

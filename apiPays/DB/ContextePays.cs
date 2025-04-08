@@ -1,6 +1,7 @@
 ﻿using ApiPays.Models;
 using Microsoft.EntityFrameworkCore;
 
+
 namespace ApiPays.DB
 {
     public class ContextePays : DbContext
@@ -14,9 +15,16 @@ namespace ApiPays.DB
 
         public DbSet<PersonneTrajet> PersonneTrajets { get; set; }
 
+        public ContextePays(DbContextOptions<ContextePays> options) : base(options)
+        {
+
+        }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb; Database=db_countries; Trusted_Connection=True;");
+            //connection à la base locale de windows
+            //optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb; Database=db_countries; Trusted_Connection=True;");
+            //Récupérer la connection de appsettings
+            optionsBuilder.UseSqlServer();
         }
     }
 }
